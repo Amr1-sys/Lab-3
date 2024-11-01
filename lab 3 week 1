@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h> // For exit()
+
+#define SIZE 24
+#define nRows 8
+#define nCols 3
+
+// PROTOTYPES
+void print_array(int array[], int length);
+void print_matrix(int mat[][nCols], int rows);
+bool isValid(const int arr[], int length, int pos);
+void remove_element(int arr[], int length, int pos);
+void insert_element(int arr[], int length, int pos, int value);
+
+int main() {
+    int arr[SIZE] = {0}; // Initialize array with zeroes
+    int arr2d[nRows][nCols] = {0}; // Initialize 2D array with zeroes
+
+    print_matrix(arr2d, nRows);
+
+    // Example usage of remove and insert functions
+    insert_element(arr, SIZE, 5, 10); // Insert 10 at index 5
+    print_array(arr, SIZE);
+    remove_element(arr, SIZE, 5); // Remove element at index 5
+    print_array(arr, SIZE);
+    
+    return 0;
+}
+
+void print_array(int array[], int length) {
+    for(int i = 0; i < length; i++)
+        printf("array[%d] = %d\n", i, array[i]);
+}
+
+void print_matrix(int mat[][nCols], int rows) {
+    for(int i = 0; i < rows; i++) {
+        for(int j = 0; j < nCols; j++)
+            printf("mat[%d][%d] = %d\n", i, j, mat[i][j]);
+        puts("");
+    }
+}
+
+bool isValid(const int arr[], int length, int pos) {
+    return (pos >= 0 && pos < length);
+}
+
+void remove_element(int arr[], int length, int pos) {
+    if (!isValid(arr, length, pos)) {
+        printf("Error: Index %d is out of bounds.\n", pos);
+        return;
+    }
+
+    for (int i = pos; i < length - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    arr[length - 1] = 0; // Optional: clear the last element
+}
+
+void insert_element(int arr[], int length, int pos, int value) {
+    if (!isValid(arr, length, pos) || length == 0) {
+        printf("Error: Index %d is out of bounds.\n", pos);
+        return;
+    }
+
+    for (int i = length - 1; i > pos; i--) {
+        arr[i] = arr[i - 1];
+    }
+    arr[pos] = value;
+}
